@@ -2,13 +2,13 @@
   <div class="home container">
     <h2>Hodo Chat App</h2>
     <div v-if="isLogin">
-      <Login />
+      <Login @login="startChat" />
       <p>
         Go to <span @click="isLogin = false">register page</span> for a register
       </p>
     </div>
     <div v-else>
-      <Register />
+      <Register @register="startChat" />
       <p>Go to <span @click="isLogin = true">login page</span> for a login</p>
     </div>
   </div>
@@ -19,13 +19,19 @@
 import Register from "../components/Register.vue";
 import Login from "../components/Login.vue";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "HomeView",
   components: { Register, Login },
   setup() {
     const isLogin = ref(true);
-    return { isLogin };
+    const router = useRouter();
+
+    const startChat = () => {
+      router.push({ name: "ChatRoom" });
+    };
+    return { isLogin, startChat };
   },
 };
 </script>
