@@ -1,10 +1,10 @@
 import { ref } from "vue";
 import { auth } from "../firebase/config";
 
-const error = ref(null);
+const hata = ref(null);
 
 const signup = async (email, parola, username) => {
-  error.value = null;
+  hata.value = null;
   try {
     if (username.trim() === "") {
       throw new Error("Username is required");
@@ -12,20 +12,20 @@ const signup = async (email, parola, username) => {
     const res = await auth.createUserWithEmailAndPassword(email, parola);
 
     if (!res) {
-      throw new Error("Error creating user");
+      throw new Error("Problem here!");
     }
 
     await res.user.updateProfile({ displayName: username });
 
-    error.value = null;
+    hata.value = null;
     return res;
   } catch (error) {
-    error.value = error.message;
+    hata.value = error.message;
   }
 };
 
 const useRegister = () => {
-  return { error, signup };
+  return { hata, signup };
 };
 
 export default useRegister;
