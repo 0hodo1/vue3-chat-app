@@ -17,7 +17,7 @@
 
 <script>
 import getCollection from "../composables/getCollection";
-import { computed, ref } from "vue";
+import { computed, onUpdated, ref } from "vue";
 import { formatDistanceToNow } from "date-fns";
 export default {
   setup() {
@@ -33,6 +33,10 @@ export default {
     });
 
     const messages = ref(null);
+
+    onUpdated(() => {
+      messages.value.scrollTop = messages.value.scrollHeight;
+    });
 
     return { hata, documents, duzenlenmisBelgeler, messages };
   },

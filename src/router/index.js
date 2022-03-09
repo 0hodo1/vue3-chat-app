@@ -12,11 +12,21 @@ const authControl = (to, from, next) => {
   }
 };
 
+const chatControl = (to, from, next) => {
+  const user = auth.currentUser;
+  if (user) {
+    next({ name: "ChatRoom" });
+  } else {
+    next();
+  }
+};
+
 const routes = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+    beforeEnter: chatControl,
   },
   {
     path: "/chatroom",
